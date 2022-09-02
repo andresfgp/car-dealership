@@ -31,7 +31,7 @@ export class CarsService {
     return this.cars;
   }
 
-  findOneById(id: string) {
+  findOne(id: string) {
     const car = this.cars.find((car) => car.id === id);
     if (!car) throw new NotFoundException(`Car with id '${id}' not found`);
     return car;
@@ -47,7 +47,7 @@ export class CarsService {
   }
 
   update(id: string, updateCarDto: UpdateCarDto) {
-    let carDB = this.findOneById(id);
+    let carDB = this.findOne(id);
     if (updateCarDto.id && updateCarDto.id !== id)
       throw new BadRequestException(`Car id is not valid`);
 
@@ -63,8 +63,8 @@ export class CarsService {
     return carDB;
   }
 
-  delete(id: string) {
-    const carDB = this.findOneById(id);
+  remove(id: string) {
+    const carDB = this.findOne(id);
     this.cars = this.cars.filter((car) => car.id !== carDB.id);
   }
 }
