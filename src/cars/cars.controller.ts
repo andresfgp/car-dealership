@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -35,5 +36,10 @@ export class CarsController {
     @Body() updateCarDto: UpdateCarDto,
   ) {
     return this.carsService.update(id, updateCarDto);
+  }
+
+  @Delete(':id')
+  deleteCar(@Param('id', ParseUUIDPipe) id: string) {
+    return this.carsService.delete(id);
   }
 }

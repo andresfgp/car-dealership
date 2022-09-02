@@ -51,17 +51,20 @@ export class CarsService {
     if (updateCarDto.id && updateCarDto.id !== id)
       throw new BadRequestException(`Car id is not valid`);
 
-    this.cars = this.cars.map((car) => {
-      if (car.id === id) {
-        carDB = {
-          ...carDB,
-          ...updateCarDto,
-          id,
-        };
-        return carDB;
-      }
-      return car;
-    });
+    this.cars = this.cars.map((car) =>
+      car.id === id
+        ? (carDB = {
+            ...carDB,
+            ...updateCarDto,
+            id,
+          })
+        : car,
+    );
     return carDB;
+  }
+
+  delete(id: string) {
+    const carDB = this.findOneById(id);
+    this.cars = this.cars.filter((car) => car.id !== carDB.id);
   }
 }
